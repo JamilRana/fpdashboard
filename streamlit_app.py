@@ -1,127 +1,27 @@
-import streamlit as st
-import numpy as np
+import requests
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
 
-st.title('🤖 Machine Learning App')
+# Define the API URL
+url = "https://hrm.dghs.gov.bd/api/1.0/facilities/get?facilitytype_id=[2,5,19,24,25,26,27,28,29]&limit=1000"
 
-st.info('This is app builds a machine learning model!')
+# Define headers with the authentication token
+headers = {
+    'X-Auth-Token': '77223156d66e58f8591b2cc247f493ccf5ebb9d12b2c4bde6a4ddaebaad7045c',
+    'client-id': '185924'
+}
 
-with st.expander('Data'):
-  st.write('**Raw data**')
-  df = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/penguins_cleaned.csv')
-  df
+# Send a GET request to the API
+response = requests.get(url, headers=headers)
 
-  st.write('**X**')
-  X_raw = df.drop('species', axis=1)
-  X_raw
-
-  st.write('**y**')
-  y_raw = df.species
-  y_raw
-
-with st.expander('Data visualization'):
-  #st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g',x_label='Bill Length', y_label='Body Mass (g)', color='species')
-  st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g', x_label='Bill Length', y_label='Body Mass (g)', color='species')
-
-# Input features
-with st.sidebar:
-  st.header('Input features')
-  island = st.selectbox('Island', ('Biscoe', 'Dream', 'Torgersen'))
-  bill_length_mm = st.slider('Bill length (mm)', 32.1, 59.6, 43.9)
-  bill_depth_mm = st.slider('Bill depth (mm)', 13.1, 21.5, 17.2)
-  flipper_length_mm = st.slider('Flipper length (mm)', 172.0, 231.0, 201.0)
-  body_mass_g = st.slider('Body mass (g)', 2700.0, 6300.0, 4207.0)
-  gender = st.selectbox('Gender', ('male', 'female'))
-  
-  # Create a DataFrame for the input features
-  data = {'island': island,
-          'bill_length_mm': bill_length_mm,
-          'bill_depth_mm': bill_depth_mm,
-          'flipper_length_mm': flipper_length_mm,
-          'body_mass_g': body_mass_g,
-          'sex': gender}
-  input_df = pd.DataFrame(data, index=[0])
-  input_penguins = pd.concat([input_df, X_raw], axis=0)
-
-with st.expander('Input features'):
-  st.write('**Input penguin**')
-  input_df
-  st.write('**Combined penguins data**')
-  input_penguins
-
-
-# Data preparation
-# Encode X
-encode = ['island', 'sex']
-df_penguins = pd.get_dummies(input_penguins, prefix=encode)
-
-st.write('**df_penguins**')
-df_penguins
-
-X = df_penguins[1:]
-X
-
-input_row = df_penguins[:1]
-
-# Encode y
-target_mapper = {'Adelie': 0,
-                 'Chinstrap': 1,
-                 'Gentoo': 2}
-def target_encode(val):
-  return target_mapper[val]
-
-y = y_raw.apply(target_encode)
-
-with st.expander('Data preparation'):
-  st.write('**Encoded X (input penguin)**')
-  input_row
-  st.write('**Encoded y**')
-  y
-
-
-# Model training and inference
-## Train the ML model
-clf = RandomForestClassifier()
-clf.fit(X, y)
-
-## Apply model to make predictions
-prediction = clf.predict(input_row)
-prediction_proba = clf.predict_proba(input_row)
-
-df_prediction_proba = pd.DataFrame(prediction_proba)
-df_prediction_proba.columns = ['Adelie', 'Chinstrap', 'Gentoo']
-df_prediction_proba.rename(columns={0: 'Adelie',
-                                 1: 'Chinstrap',
-                                 2: 'Gentoo'})
-
-# Display predicted species
-st.subheader('Predicted Species')
-st.dataframe(df_prediction_proba,
-             column_config={
-               'Adelie': st.column_config.ProgressColumn(
-                 'Adelie',
-                 format='%f',
-                 width='medium',
-                 min_value=0,
-                 max_value=1
-               ),
-               'Chinstrap': st.column_config.ProgressColumn(
-                 'Chinstrap',
-                 format='%f',
-                 width='medium',
-                 min_value=0,
-                 max_value=1
-               ),
-               'Gentoo': st.column_config.ProgressColumn(
-                 'Gentoo',
-                 format='%f',
-                 width='medium',
-                 min_value=0,
-                 max_value=1
-               ),
-             }, hide_index=True)
-
-
-penguins_species = np.array(['Adelie', 'Chinstrap', 'Gentoo'])
-st.success(str(penguins_species[prediction][0]))
+# Check if the request was successful
+if response.status_code == 200:
+    # Get the JSON response from the API
+    data = response.json()
+    
+    # Convert the data to a Pandas DataFrame
+    df = pd.DataFrame(data['data'])  # Assuming the JSON structure has a key 'data' that contains the list of facilities
+    
+    # Display the first few rows of the dataframe
+    print(df.head())
+else:
+    print("Failed to retrieve data. Status code:", response.status_code)
