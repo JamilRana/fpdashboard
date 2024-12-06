@@ -13,8 +13,8 @@ with st.expander('Data'):
   df
 
   st.write('**X**')
-  x_raw = df.drop('species',axis=1)
-  x_raw
+  X_raw = df.drop('species', axis=1)
+  X_raw
 
   st.write('**y**')
   y_raw = df.species
