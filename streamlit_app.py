@@ -66,3 +66,8 @@ if hrm_response.status_code == 200:
     print(hrm_df.head())  # Display the first few rows of the HRM DataFrame
 else:
     print(f"Failed to retrieve data from HRM. Status code: {hrm_response.status_code}")
+st.write("HRM")
+hrm_df
+
+dhis2_df
+
