@@ -1,6 +1,11 @@
 import requests
+import streamlit as st
 import pandas as pd
 import json
+
+st.title('🤖 Machine Learning App')
+
+st.info('This is app builds a machine learning model!')
 
 # Define the period parameter for DHIS2 API (you can assign this dynamically as needed)
 period = '2023Q1'  # Example period, change this based on your requirement
