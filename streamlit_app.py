@@ -21,7 +21,7 @@ with st.expander('Data'):
   y_raw
 
 with st.expander('Data visualization'):
-  st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g', color='species')
+  st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g',x_label='Bill Length', y_label='Body Mass (g)', color='species')
 
 # Input features
 with st.sidebar:
@@ -41,7 +41,7 @@ with st.sidebar:
           'body_mass_g': body_mass_g,
           'sex': gender}
   input_df = pd.DataFrame(data, index=[0])
-  input_penguins = pd.concat([input_df, X_raw], axis=0)
+  input_penguins = pd.concat([input_df, X_raw], axis=1)
 
 with st.expander('Input features'):
   st.write('**Input penguin**')
