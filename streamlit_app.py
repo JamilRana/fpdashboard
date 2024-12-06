@@ -22,7 +22,7 @@ with st.expander('Data'):
 
 with st.expander('Data visualization'):
   #st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g',x_label='Bill Length', y_label='Body Mass (g)', color='species')
-  st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g', x_label='Bill Length', color='species')
+  st.scatter_chart(data=df, x='bill_length_mm', y='body_mass_g', x_label='Bill Length', y_label='Body Mass (g)', color='species')
 
 # Input features
 with st.sidebar:
@@ -42,7 +42,7 @@ with st.sidebar:
           'body_mass_g': body_mass_g,
           'sex': gender}
   input_df = pd.DataFrame(data, index=[0])
-  input_penguins = pd.concat([input_df, X_raw], axis=1)
+  input_penguins = pd.concat([input_df, X_raw], axis=0)
 
 with st.expander('Input features'):
   st.write('**Input penguin**')
@@ -55,6 +55,9 @@ with st.expander('Input features'):
 # Encode X
 encode = ['island', 'sex']
 df_penguins = pd.get_dummies(input_penguins, prefix=encode)
+
+st.write('**df_penguins**')
+  input_penguins
 
 X = df_penguins[1:]
 input_row = df_penguins[:1]
