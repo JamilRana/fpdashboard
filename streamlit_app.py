@@ -49,29 +49,29 @@ else:
 
 
 # HRM API URL for facilities data
-hrm_url = "https://hrm.dghs.gov.bd/api/1.0/facilities/get?facilitytype_id=[2,5,19,24,25,26,27,28,29]&limit=1000"
+# hrm_url = "https://hrm.dghs.gov.bd/api/1.0/facilities/get?facilitytype_id=[2,5,19,24,25,26,27,28,29]&limit=1000"
 
-# Define headers with the authentication token for HRM API
-hrm_headers = {
-    'X-Auth-Token': '77223156d66e58f8591b2cc247f493ccf5ebb9d12b2c4bde6a4ddaebaad7045c',
-    'client-id': '185924'
-}
+# # Define headers with the authentication token for HRM API
+# hrm_headers = {
+#     'X-Auth-Token': '77223156d66e58f8591b2cc247f493ccf5ebb9d12b2c4bde6a4ddaebaad7045c',
+#     'client-id': '185924'
+# }
 
-# Send a GET request to the HRM API
-hrm_response = requests.get(hrm_url, headers=hrm_headers)
+# # Send a GET request to the HRM API
+# hrm_response = requests.get(hrm_url, headers=hrm_headers)
 
-# Check if the request to HRM was successful
-if hrm_response.status_code == 200:
-    hrm_data = hrm_response.json()
+# # Check if the request to HRM was successful
+# if hrm_response.status_code == 200:
+#     hrm_data = hrm_response.json()
 
-    # Convert the data to a Pandas DataFrame (assuming the 'data' key contains the list of facilities)
-    hrm_df = pd.DataFrame(hrm_data['data'])
+#     # Convert the data to a Pandas DataFrame (assuming the 'data' key contains the list of facilities)
+#     hrm_df = pd.DataFrame(hrm_data['data'])
     
-    print("HRM DataFrame:")
-    print(hrm_df.head())  # Display the first few rows of the HRM DataFrame
-else:
-    print(f"Failed to retrieve data from HRM. Status code: {hrm_response.status_code}")
-st.write("HRM")
+#     print("HRM DataFrame:")
+#     print(hrm_df.head())  # Display the first few rows of the HRM DataFrame
+# else:
+#     print(f"Failed to retrieve data from HRM. Status code: {hrm_response.status_code}")
+# st.write("HRM")
 
 
 dhis2_df
