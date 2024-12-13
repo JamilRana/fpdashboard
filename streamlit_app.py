@@ -117,6 +117,7 @@ print(grouped_sum)
 categories = service_name_df['category'].unique().tolist()
 client_types = service_name_df['client_type'].unique().tolist()
 method_types = service_name_df['method_type'].unique().tolist()
+method_types = merge2_df['method_type'].unique().tolist()
 
 # Display a selectbox in Streamlit
 
@@ -125,6 +126,6 @@ method_types = service_name_df['method_type'].unique().tolist()
 
 with st.sidebar:
   st.header('Filter')
-  category = st.selectbox('Select a category:', categories)
-  client_type = st.selectbox('Select a category:', client_types)
-  method_type = st.selectbox('Select a category:', method_types)
+  category = st.multiselect('Select categories:', categories)
+  client_type = st.multiselect('Select Client Types:', client_types)
+  method_type = st.multiselect('Select Method Types:', method_types)
