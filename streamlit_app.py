@@ -113,3 +113,18 @@ grouped_sum
 
 grouped_sum = merge2_df.groupby(['name','division_name'])['value'].sum().reset_index()
 print(grouped_sum)
+
+categories = merge2_df['category'].unique().tolist()
+client_types = service_name_df['client_type'].unique().tolist()
+method_types = service_name_df['method_type'].unique().tolist()
+
+# Display a selectbox in Streamlit
+
+
+
+
+with st.sidebar:
+  st.header('Filter')
+  category = st.selectbox('Select a category:', categories)
+  client_type = st.selectbox('Select a category:', client_types)
+  method_type = st.selectbox('Select a category:', method_types)
