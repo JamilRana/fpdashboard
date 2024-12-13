@@ -2,6 +2,10 @@ import requests
 import pandas as pd
 import json
 
+st.title('🤖 Machine Learning App')
+
+st.info('This is app builds a machine learning model!')
+
 # Fetch facility data
 facility_url = "https://hrm.dghs.gov.bd/api/1.0/facilities?facilitytype_id=[2,5,19,24,25,26,27,28,29]&rows_per_page=1000"
 
@@ -102,7 +106,7 @@ print(merge2_df[['dataElement','category','value']])
 merge2_df['value'] = pd.to_numeric(merge2_df['value'], errors='coerce')
 
 grouped_sum = merge2_df.groupby(['category','division_name','facility_type_name'])['value'].sum().reset_index()
-print(grouped_sum)
+grouped_sum
 
 grouped_sum = merge2_df.groupby(['name','division_name'])['value'].sum().reset_index()
 print(grouped_sum)
