@@ -2,12 +2,17 @@ import requests
 import pandas as pd
 import json
 import streamlit as st
+import plotly.express as px
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
+
 
 st.title('🤖 Machine Learning App')
 
 st.info('This is app builds a machine learning model!')
+
+if "selected_category" not in st.session_state:
+    st.session_state["selected_category"] = None
 
 # Fetch facility data
 facility_url = "https://hrm.dghs.gov.bd/api/1.0/facilities?facilitytype_id=[2,5,19,24,25,26,27,28,29]&rows_per_page=1000"
@@ -129,3 +134,26 @@ with st.sidebar:
   category = st.multiselect('Select categories:', categories)
   client_type = st.multiselect('Select Client Types:', client_types)
   method_type = st.multiselect('Select Method Types:', method_types)
+
+fig = px.bar(merge2_df, x="category", y="value", title="Click on a Bar to Filter", text="Value")
+fig.update_traces(marker_color="blue", texttemplate="%{text:.0s}")
+fig.update_layout(clickmode="event+select")
+
+# Streamlit Plotly Integration
+selected_point = st.plotly_chart(fig, use_container_width=True, click_events=True)
+
+# Capture Click Event
+if selected_point and "points" in selected_point:
+    clicked_category = selected_point["points"][0]["x"]
+    st.session_state["selected_category"] = clicked_category
+
+# Filter Data
+if st.session_state["selected_category"]:
+    st.write(f"Filtering data for category: {st.session_state['selected_category']}")
+    filtered_data = merge2_df[merge2_df["category"] == st.session_state["selected_category"]]
+else:
+    filtered_data = df
+
+# Display Filtered Data
+st.write("Filtered Data:")
+st.write(filtered_data)
