@@ -118,6 +118,8 @@ grouped_sum
 
 grouped_sum = merge2_df.groupby(['name','division_name'])['value'].sum().reset_index()
 print(grouped_sum)
+merge2_df['value'] = merge2_df['value'].fillna(0)
+
 
 categories = service_name_df['category'].unique().tolist()
 client_types = service_name_df['client_type'].unique().tolist()
@@ -135,7 +137,7 @@ with st.sidebar:
   client_type = st.multiselect('Select Client Types:', client_types)
   method_type = st.multiselect('Select Method Types:', method_types)
 
-fig = px.bar(merge2_df, x="category", y="value", title="Click on a Bar to Filter", text="Value")
+fig = px.bar(merge2_df, x="category", y="value", title="Click on a Bar to Filter", text="value")
 fig.update_traces(marker_color="blue", texttemplate="%{text:.0s}")
 fig.update_layout(clickmode="event+select")
 
