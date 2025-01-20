@@ -15,7 +15,7 @@ if "selected_category" not in st.session_state:
     st.session_state["selected_category"] = None
 
 # Fetch facility data
-facility_url = "https://hrm.dghs.gov.bd/api/1.0/facilities?facilitytype_id=[2,5,19,24,25,26,27,28,29]&rows_per_page=1000"
+facility_url = "https://hrm.dghs.gov.bd/api/1.0/facilities?facilitytype_id=[2,5,19,24,25,26,27,28,29]&rows_per_page=3000"
 
 # Headers with authentication token
 headers = {
