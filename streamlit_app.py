@@ -101,7 +101,7 @@ service_name_df = pd.DataFrame({
                     'Interval Client', 'Post-partum Client','Post-abortion Client'],
     'method_type': ['Short Acting Method','Short Acting Method','Short Acting Method','Short Acting Method','Short Acting Method',
                     'Short Acting Method','Short Acting Method','Short Acting Method','Short Acting Method','Short Acting Method',
-                    'Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method',
+                    'Short Acting Method','Short Acting Method','Short Acting Method','Short Acting Method','Short Acting Method',
                     'Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method',
                     'Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method','Long Acting Reversible Contraseptive Method',
                     'Permanent Method','Permanent Method',
@@ -115,6 +115,9 @@ merge2_df['value'] = pd.to_numeric(merge2_df['value'], errors='coerce')
 
 grouped_sum = merge2_df.groupby(['category','division_name','facility_type_name'])['value'].sum().reset_index()
 grouped_sum
+
+g_sum = merge2_df.groupby(['name'])['value'].sum().reset_index()
+g_sum
 
 grouped_sum = merge2_df.groupby(['name','division_name'])['value'].sum().reset_index()
 print(grouped_sum)
