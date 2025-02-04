@@ -30,6 +30,7 @@ if facility_response.status_code == 200:
     if 'data' in facility_data and 'items' in facility_data['data']:
         facility_df = pd.DataFrame(facility_data['data']['items'])
         facility_df = facility_df[['code', 'name', 'division_name', 'district_name', 'upazila_name', 'latitude', 'longitude', 'email_1','facility_type_name']]
+        facility_df
     else:
         print("Key 'items' not found in 'data'.")
         facility_df = pd.DataFrame()
@@ -37,7 +38,7 @@ else:
     print(f"Facility API request failed with status code {facility_response.status_code}")
     facility_df = pd.DataFrame()
 
-facility_df
+
 # Fetch dataValues
 period = "202209"
 data_url = f"https://centraldhis.mohfw.gov.bd/dhismohfw/api/dataValueSets.json?orgUnitIdScheme=code&dataSet=eiFwqClSR1L&orgUnit=dNLjKwsVjod&children=true&period={period}"
