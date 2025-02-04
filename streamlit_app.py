@@ -37,6 +37,7 @@ else:
     print(f"Facility API request failed with status code {facility_response.status_code}")
     facility_df = pd.DataFrame()
 
+facility_df
 # Fetch dataValues
 period = "202209"
 data_url = f"https://centraldhis.mohfw.gov.bd/dhismohfw/api/dataValueSets.json?orgUnitIdScheme=code&dataSet=eiFwqClSR1L&orgUnit=dNLjKwsVjod&children=true&period={period}"
