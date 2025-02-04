@@ -7,9 +7,9 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
 
-st.title('🤖 Machine Learning App')
+st.title('FP and MR-PAC services')
 
-st.info('This is app builds a machine learning model!')
+st.info('This is FP and MR-PAC services dashboard')
 
 if "selected_category" not in st.session_state:
     st.session_state["selected_category"] = None
